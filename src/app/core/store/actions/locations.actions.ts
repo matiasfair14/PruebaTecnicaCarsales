@@ -1,11 +1,14 @@
 import { createAction, props } from '@ngrx/store';
 import { LocationResult } from '../../interfaces/location.interface';
 
-export const cargarLocationsSuccess = createAction(
-  '[Locations] Cargar Locations Success',
+export const loadLocations = createAction('[Locations] Load Locations',
+ props<{id: string}>());
+
+export const loadLocationsSuccess = createAction(
+  '[Locations] Load Locations Success',
   props<{ locations: LocationResult }>()
 );
-export const cargarLocationsError = createAction(
-  '[Locations] Cargar Locations Error',
+export const loadLocationsError = createAction(
+  '[Locations] Load Locations Error',
   props<{ payload: any }>()
 );

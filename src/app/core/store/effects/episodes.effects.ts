@@ -14,15 +14,15 @@ export class EpisodesEffects {
     private Episodeservice: EpisodeService
   ) {}
 
-  cargarEpisodes$ = createEffect(
+  loadEpisodes$ = createEffect(
     ():any => this.actions$.pipe(
         // Observable que quiero escuchar, le digo que evalue esta opcion!
-        ofType( episodesActions.cargarEpisodesSuccess ),
+        ofType( episodesActions.loadEpisodes ),
         mergeMap(
             ( action ) => this.Episodeservice.getEpisodes()
                 .pipe(
-                    map( episodesData => episodesActions.cargarEpisodesSuccess({ episodes: episodesData }) ),
-                    catchError( err => of(episodesActions.cargarEpisodesError({ payload: err })) )
+                    map( episodesData => episodesActions.loadEpisodesSuccess({ episodes: episodesData }) ),
+                    catchError( err => of(episodesActions.loadEpisodesError({ payload: err })) )
                 )
                 // of lo transforma en un observable
         )

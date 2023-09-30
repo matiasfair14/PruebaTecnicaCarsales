@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { cargarLocationsError, cargarLocationsSuccess } from '../actions';
+import { loadLocations, loadLocationsError, loadLocationsSuccess } from '../actions';
 import { EpisodeResult } from '../../interfaces/episode.interface';
 
 
@@ -21,13 +21,14 @@ export const LocationsInitialState: LocationsState = {
 
 const _locationsReducer = createReducer(
   LocationsInitialState,
-  on(cargarLocationsSuccess, (state, { Locations }: any) => ({
+  on(loadLocations, (state) => ({ ...state, loading: true })),
+  on(loadLocationsSuccess, (state, { Locations }: any) => ({
     ...state,
     loading: false,
     loaded: true,
-    user: {...Locations},
+    result: {...Locations},
   })),
-  on(cargarLocationsError, (state, { payload }) => ({
+  on(loadLocationsError, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

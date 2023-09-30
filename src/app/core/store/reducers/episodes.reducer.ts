@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { cargarEpisodesError, cargarEpisodesSuccess } from '../actions';
+import { loadEpisodes, loadEpisodesError, loadEpisodesSuccess } from '../actions';
 import { EpisodeResult } from '../../interfaces/episode.interface';
 
 
@@ -21,13 +21,14 @@ export const episodesInitialState: EpisodesState = {
 
 const _episodesReducer = createReducer(
   episodesInitialState,
-  on(cargarEpisodesSuccess, (state, { episodes }: any) => ({
+  on(loadEpisodes, (state) => ({ ...state, loading: true })),
+  on(loadEpisodesSuccess, (state, { episodes }: any) => ({
     ...state,
     loading: false,
     loaded: true,
-    user: {...episodes},
+    result: {...episodes},
   })),
-  on(cargarEpisodesError, (state, { payload }) => ({
+  on(loadEpisodesError, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

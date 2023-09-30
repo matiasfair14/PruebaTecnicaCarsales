@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EpResult } from 'src/app/core/interfaces/episode.interface';
 
 @Component({
   selector: 'app-character',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./character.component.scss']
 })
 export class CharacterComponent {
-
+  episodes: EpResult[] = [];
 }
+

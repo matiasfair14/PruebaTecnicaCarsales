@@ -1,1 +1,174 @@
-<p>character works!</p>
+<p-panel>
+  <ng-template pTemplate="header">
+    <div class="div-center">
+      <span class="text-6xl">{{ title }}</span>
+    </div>
+  </ng-template>
+
+  <hr class="line" />
+  <p-table
+    #dt1
+    [value]="episodes"
+    dataKey="id"
+    [rows]="10"
+    responsiveLayout="scroll"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    styleClass="p-datatable-gridlines"
+    [paginator]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+    [globalFilterFields]="[
+      'transmisionId',
+      'documentType',
+      'documentThemeCode',
+      'idOficio',
+      'numerationDate',
+      'responseLimitDate',
+      'xmlStatus',
+      'entryDate'
+    ]"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="Exportar excel" tooltipPosition="bottom"></button>
+
+        <button
+          pButton
+          label="Limpiar"
+          pTooltip="Limpiar Filtro"
+          class="p-button-outlined"
+          icon="pi pi-filter-slash"
+          (click)="clear(dt1)"
+        ></button>
+
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt1.filterGlobal($event.target.value, 'contains')"
+            placeholder="Buscar la palabra clave"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th
+          scope="col"
+          [pSortableColumn]="col.field"
+          *ngFor="let col of cols"
+          [ngSwitch]="true"
+        >
+          <div class="flex justify-content-center align-items-center">
+            {{ col.header }}
+            <p-columnFilter
+              *ngSwitchCase="
+                col.field === 'transmisionId' ||
+                col.field === 'documentType' ||
+                col.field === 'documentThemeCode' ||
+                col.field === 'idOficio' ||
+                col.field === 'xmlStatus'
+              "
+              type="text"
+              [field]="col.field"
+              display="menu"
+              class="ml-1"
+            ></p-columnFilter>
+            <p-columnFilter
+              *ngSwitchCase="
+                col.field === 'numerationDate' ||
+                col.field === 'responseLimitDate' ||
+                col.field === 'entryDate'
+              "
+              type="date"
+              [field]="col.field"
+              display="menu"
+              class="ml-1"
+            ></p-columnFilter>
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-doc>
+      <tr>
+        <td>
+          {{ doc.transmisionId }}
+        </td>
+        <td>
+          {{ doc.documentType | documentTypes }}
+        </td>
+        <td>
+          {{ doc.documentThemeCode }}
+        </td>
+        <td>
+          {{ doc.idOficio }}
+        </td>
+        <td>
+          {{
+            doc.numerationDate == null
+              ? "No disponible."
+              : formatToDate(doc.numerationDate, "dd/MM/yyyy")
+          }}
+        </td>
+        <td>
+          {{
+            doc.responseLimitDate == null
+              ? "No requiere respuesta."
+              : formatToDate(doc.responseLimitDate, "dd/MM/yyyy")
+          }}
+        </td>
+        <td>
+          {{ doc.xmlStatus }}
+        </td>
+        <td>
+          {{
+            doc.entryDate == null
+              ? "No disponible."
+              : formatToDate(doc.entryDate, "dd/MM/yyyy HH:mm:ss")
+          }}
+        </td>
+        <td class="center">
+          <button
+            id="dowlandMainFile"
+            pButton
+            pRipple
+            pTooltip="Descargar Archivo principal"
+            tooltipPosition="left"
+            (click)="dowlandMainFile(doc)"
+            class="p-button-rounded p-button mr-2 mb-1"
+            icon="pi pi-file-pdf"
+          ></button>
+          <button
+            id="showExtraFiles"
+            pButton
+            pRipple
+            pTooltip="Ver Archivos Extra"
+            tooltipPosition="left"
+            (click)="showExtraFiles(doc)"
+            class="p-button-rounded p-button-info mr-2 mb-1"
+            icon="pi pi-eye"
+            [disabled]="!doc.extraFile"
+          ></button>
+          <button
+            id="loadDispatch"
+            pButton
+            pRipple
+            pTooltip="Cargar información en Despacho Electrónico"
+            tooltipPosition="left"
+            (click)="loadDispatch(doc)"
+            class="p-button-rounded p-button-success mr-2 mb-1"
+            icon="pi pi-pencil"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="10">No se encontraron documentos enviados.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-footer></p-footer>
+</p-panel>

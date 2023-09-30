@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { CharacterResult } from '../../interfaces/character.interface';
-import { cargarCharactersError, cargarCharactersSuccess } from '../actions';
+import { loadCharacters, loadCharactersError, loadCharactersSuccess } from '../actions';
 
 
 export interface CharactersState {
@@ -21,13 +21,14 @@ export const charactersInitialState: CharactersState = {
 
 const _charactersReducer = createReducer(
   charactersInitialState,
-  on(cargarCharactersSuccess, (state, { characters }: any) => ({
+  on(loadCharacters, (state) => ({ ...state, loading: true })),
+  on(loadCharactersSuccess, (state, { characters }: any) => ({
     ...state,
     loading: false,
     loaded: true,
-    user: {...characters},
+    result: {...characters},
   })),
-  on(cargarCharactersError, (state, { payload }) => ({
+  on(loadCharactersError, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,

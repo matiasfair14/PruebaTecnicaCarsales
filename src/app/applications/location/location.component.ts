@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EpResult } from 'src/app/core/interfaces/episode.interface';
 
 @Component({
   selector: 'app-location',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./location.component.scss']
 })
 export class LocationComponent {
-
+  episodes: EpResult[] = [];
 }
+
+
+

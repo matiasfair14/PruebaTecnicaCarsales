@@ -1,11 +1,13 @@
 import { createAction, props } from '@ngrx/store';
 import { EpisodeResult } from '../../interfaces/episode.interface';
 
-export const cargarEpisodesSuccess = createAction(
-  '[Episodes] Cargar Episodes Success',
+export const loadEpisodes = createAction('[Episodes] Load Episodes');
+
+export const loadEpisodesSuccess = createAction(
+  '[Episodes] Load Episodes Success',
   props<{ episodes: EpisodeResult }>()
 );
-export const cargarEpisodesError = createAction(
-  '[Episodes] Cargar Episodes Error',
+export const loadEpisodesError = createAction(
+  '[Episodes] Load Episodes Error',
   props<{ payload: any }>()
 );

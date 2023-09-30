@@ -14,15 +14,15 @@ export class LocationsEffects {
     private Locationservice: LocationService
   ) {}
 
-  cargarLocations$ = createEffect(
+  loadLocations$ = createEffect(
     ():any => this.actions$.pipe(
         // Observable que quiero escuchar, le digo que evalue esta opcion!
-        ofType( characterActions.cargarLocationsSuccess ),
+        ofType( characterActions.loadLocations ),
         mergeMap(
             ( action ) => this.Locationservice.getLocations()
                 .pipe(
-                    map( characterData => characterActions.cargarLocationsSuccess({ locations: characterData }) ),
-                    catchError( err => of(characterActions.cargarLocationsError({ payload: err })) )
+                    map( characterData => characterActions.loadLocationsSuccess({ locations: characterData }) ),
+                    catchError( err => of(characterActions.loadLocationsError({ payload: err })) )
                 )
                 // of lo transforma en un observable
         )

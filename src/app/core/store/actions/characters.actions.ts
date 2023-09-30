@@ -1,11 +1,14 @@
 import { createAction, props } from '@ngrx/store';
 import { CharacterResult } from '../../interfaces/character.interface';
 
-export const cargarCharactersSuccess = createAction(
-  '[Characters] Cargar Characters Success',
+export const loadCharacters = createAction('[Characters] Load Characters');
+
+export const loadCharactersSuccess = createAction(
+  '[Characters] Load Characters Success',
   props<{ characters: CharacterResult }>()
 );
-export const cargarCharactersError = createAction(
-  '[Characters] Cargar Characters Error',
+
+export const loadCharactersError = createAction(
+  '[Characters] Load Characters Error',
   props<{ payload: any }>()
 );
