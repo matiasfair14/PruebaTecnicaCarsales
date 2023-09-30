@@ -1,0 +1,114 @@
+<app-loading *ngIf="isLoading">{{ isLoading }}</app-loading>
+<p-dialog
+  [(visible)]="displayMaximizable"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [maximizable]="true"
+  [baseZIndex]="9999999"
+  [draggable]="true"
+  [resizable]="true"
+>
+  <p-header class="center-text">
+    <img
+      src="assets/imgs/rick.png"
+      style="height: 25px; margin-right: 10px; width: 25px"
+      alt="logo"
+    />
+
+    Detalles Episodio
+  </p-header>
+  <div class="container mt-4 text-2xl">
+    <div class="lg:col-12 md:col-12 sm:col-12 xs:col-12">
+      <p-table responsiveLayout="scroll" [value]="episode">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Al aire</th>
+            <th>Fecha Creación</th>
+          </tr></ng-template
+        >
+        <ng-template pTemplate="body" let-ep>
+          <tr>
+            <td>
+              {{ ep?.air_date | date : "dd/MM/yyyy" }}
+            </td>
+            <td>
+              {{ ep?.created | date : "dd/MM/yyyy hh:mm:ss" }}
+            </td>
+
+          </tr>
+        </ng-template>
+      </p-table>
+      <br>
+      <p-header class="center-text">
+        <img
+          src="assets/imgs/rick.png"
+          style="height: 25px; margin-right: 10px; width: 25px"
+          alt="logo"
+        />
+
+        Personajes Episodio
+      </p-header>
+      <br>
+
+      <p-table responsiveLayout="scroll" [value]="characters">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Imagen</th>
+            <th>Creado</th>
+            <th>Nombre</th>
+            <th>Genero</th>
+            <th>Especie</th>
+            <th>Estado</th>
+            <th>Tipo</th>
+            <th>Origen</th>
+
+
+          </tr></ng-template
+        >
+        <ng-template pTemplate="body" let-ch>
+          <tr>
+            <td>
+              <img
+                [src]="
+                   ch?.image
+                "
+                [alt]="ch?.name"
+                width="100"
+                class="shadow-4"
+              />
+            </td>
+            <td>
+              {{ ch?.created | date : "dd/MM/yyyy" }}
+            </td>
+            <td>
+              {{ ch?.name }}
+            </td>
+            <td>
+              {{ ch?.gender }}
+            </td>
+            <td>
+              {{ ch?.species }}
+            </td>
+            <td>
+              {{ ch?.status }}
+            </td>
+            <td>
+              {{ ch?.type }}
+            </td>
+            <td>
+              {{ ch?.origin.name }}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      (click)="displayMaximizable = false"
+      label="Cerrar"
+      class="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>

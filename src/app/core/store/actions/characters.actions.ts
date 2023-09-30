@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { CharacterResult } from '../../interfaces/character.interface';
 
+
 export const loadCharacters = createAction('[Characters] Load Characters');
 
 export const loadCharactersSuccess = createAction(

@@ -4,14 +4,14 @@ import { EpisodeResult } from '../../interfaces/episode.interface';
 
 
 export interface EpisodesState {
-  EpisodesData: EpisodeResult;
+  episodesData: EpisodeResult;
   loaded: boolean;
   loading: boolean;
   error: any;
 }
 
 export const episodesInitialState: EpisodesState = {
-  EpisodesData: {} as EpisodeResult,
+  episodesData: {} as EpisodeResult,
   loaded: false,
   loading: false,
   error: null,
@@ -24,7 +24,7 @@ const _episodesReducer = createReducer(
     ...state,
     loading: false,
     loaded: true,
-    EpisodesData: {...episodes},
+    episodesData: {...episodes},
   })),
   on(loadEpisodesError, (state, { payload }) => ({
     ...state,

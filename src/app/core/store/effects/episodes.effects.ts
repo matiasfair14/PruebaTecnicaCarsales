@@ -5,10 +5,8 @@ import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import * as episodesActions from '../actions';
 import { EpisodeService } from '../../services/episode/episode.service';
 
-// Es básicamente un servicio
 @Injectable()
 export class EpisodesEffects {
-  // simbolo de olar $ indica que es observable
   constructor(
     private actions$: Actions,
     private Episodeservice: EpisodeService
@@ -16,7 +14,6 @@ export class EpisodesEffects {
 
   loadEpisodes$ = createEffect(
     ():any => this.actions$.pipe(
-        // Observable que quiero escuchar, le digo que evalue esta opcion!
         ofType( episodesActions.loadEpisodes ),
         mergeMap(
             ( action ) => this.Episodeservice.getEpisodes()
@@ -24,7 +21,6 @@ export class EpisodesEffects {
                     map( episodesData => episodesActions.loadEpisodesSuccess({ episodes: episodesData }) ),
                     catchError( err => of(episodesActions.loadEpisodesError({ payload: err })) )
                 )
-                // of lo transforma en un observable
         )
     )
 );

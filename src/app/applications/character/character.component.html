@@ -1,3 +1,4 @@
+<app-loading *ngIf="isLoading">{{ isLoading }}</app-loading>
 <p-panel>
   <ng-template pTemplate="header">
     <div class="div-center">
@@ -8,7 +9,7 @@
   <hr class="line" />
   <p-table
     #dt1
-    [value]="episodes"
+    [value]="characters"
     dataKey="id"
     [rows]="10"
     responsiveLayout="scroll"
@@ -18,20 +19,13 @@
     [paginator]="true"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
     [globalFilterFields]="[
-      'transmisionId',
-      'documentType',
-      'documentThemeCode',
-      'idOficio',
-      'numerationDate',
-      'responseLimitDate',
-      'xmlStatus',
-      'entryDate'
+      'name',
+      'status',
+      'gender',
     ]"
   >
     <ng-template pTemplate="caption">
       <div class="flex">
-        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="Exportar excel" tooltipPosition="bottom"></button>
-
         <button
           pButton
           label="Limpiar"
@@ -64,28 +58,16 @@
             {{ col.header }}
             <p-columnFilter
               *ngSwitchCase="
-                col.field === 'transmisionId' ||
-                col.field === 'documentType' ||
-                col.field === 'documentThemeCode' ||
-                col.field === 'idOficio' ||
-                col.field === 'xmlStatus'
+                col.field === 'name' ||
+                col.field === 'status' ||
+                col.field === 'gender'
               "
               type="text"
               [field]="col.field"
               display="menu"
               class="ml-1"
             ></p-columnFilter>
-            <p-columnFilter
-              *ngSwitchCase="
-                col.field === 'numerationDate' ||
-                col.field === 'responseLimitDate' ||
-                col.field === 'entryDate'
-              "
-              type="date"
-              [field]="col.field"
-              display="menu"
-              class="ml-1"
-            ></p-columnFilter>
+
           </div>
         </th>
       </tr>
@@ -93,73 +75,13 @@
     <ng-template pTemplate="body" let-doc>
       <tr>
         <td>
-          {{ doc.transmisionId }}
+          {{ doc?.name }}
         </td>
         <td>
-          {{ doc.documentType | documentTypes }}
+          {{ doc?.status }}
         </td>
         <td>
-          {{ doc.documentThemeCode }}
-        </td>
-        <td>
-          {{ doc.idOficio }}
-        </td>
-        <td>
-          {{
-            doc.numerationDate == null
-              ? "No disponible."
-              : formatToDate(doc.numerationDate, "dd/MM/yyyy")
-          }}
-        </td>
-        <td>
-          {{
-            doc.responseLimitDate == null
-              ? "No requiere respuesta."
-              : formatToDate(doc.responseLimitDate, "dd/MM/yyyy")
-          }}
-        </td>
-        <td>
-          {{ doc.xmlStatus }}
-        </td>
-        <td>
-          {{
-            doc.entryDate == null
-              ? "No disponible."
-              : formatToDate(doc.entryDate, "dd/MM/yyyy HH:mm:ss")
-          }}
-        </td>
-        <td class="center">
-          <button
-            id="dowlandMainFile"
-            pButton
-            pRipple
-            pTooltip="Descargar Archivo principal"
-            tooltipPosition="left"
-            (click)="dowlandMainFile(doc)"
-            class="p-button-rounded p-button mr-2 mb-1"
-            icon="pi pi-file-pdf"
-          ></button>
-          <button
-            id="showExtraFiles"
-            pButton
-            pRipple
-            pTooltip="Ver Archivos Extra"
-            tooltipPosition="left"
-            (click)="showExtraFiles(doc)"
-            class="p-button-rounded p-button-info mr-2 mb-1"
-            icon="pi pi-eye"
-            [disabled]="!doc.extraFile"
-          ></button>
-          <button
-            id="loadDispatch"
-            pButton
-            pRipple
-            pTooltip="Cargar información en Despacho Electrónico"
-            tooltipPosition="left"
-            (click)="loadDispatch(doc)"
-            class="p-button-rounded p-button-success mr-2 mb-1"
-            icon="pi pi-pencil"
-          ></button>
+          {{ doc?.gender }}
         </td>
       </tr>
     </ng-template>

@@ -8,7 +8,6 @@ import { LocationService } from '../../services/location/location.service';
 // Es básicamente un servicio
 @Injectable()
 export class LocationsEffects {
-  // simbolo de olar $ indica que es observable
   constructor(
     private actions$: Actions,
     private Locationservice: LocationService
@@ -16,15 +15,13 @@ export class LocationsEffects {
 
   loadLocations$ = createEffect(
     ():any => this.actions$.pipe(
-        // Observable que quiero escuchar, le digo que evalue esta opcion!
         ofType( characterActions.loadLocations ),
         mergeMap(
             ( action ) => this.Locationservice.getLocations()
                 .pipe(
-                    map( characterData => characterActions.loadLocationsSuccess({ locations: characterData }) ),
+                    map( locationsData => characterActions.loadLocationsSuccess({ locations: locationsData }) ),
                     catchError( err => of(characterActions.loadLocationsError({ payload: err })) )
                 )
-                // of lo transforma en un observable
         )
     )
 );

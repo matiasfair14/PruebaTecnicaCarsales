@@ -1,17 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
 import { loadLocations, loadLocationsError, loadLocationsSuccess } from '../actions';
-import { EpisodeResult } from '../../interfaces/episode.interface';
+import { LocationResult } from '../../interfaces/location.interface';
 
 
 export interface LocationsState {
-  LocationsData: EpisodeResult;
+  locationsData: LocationResult;
   loaded: boolean;
   loading: boolean;
   error: any;
 }
 
 export const LocationsInitialState: LocationsState = {
-  LocationsData: {} as EpisodeResult,
+  locationsData: {} as LocationResult,
   loaded: false,
   loading: false,
   error: null,
@@ -20,11 +20,11 @@ export const LocationsInitialState: LocationsState = {
 const _locationsReducer = createReducer(
   LocationsInitialState,
   on(loadLocations, (state) => ({ ...state, loading: true })),
-  on(loadLocationsSuccess, (state, { Locations }: any) => ({
+  on(loadLocationsSuccess, (state, { locations }: any) => ({
     ...state,
     loading: false,
     loaded: true,
-    LocationsData: {...Locations},
+    locationsData: {...locations},
   })),
   on(loadLocationsError, (state, { payload }) => ({
     ...state,
