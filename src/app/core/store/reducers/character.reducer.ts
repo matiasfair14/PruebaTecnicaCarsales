@@ -42,6 +42,5 @@ const _characterReducer = createReducer(
 );
 
 export function characterReducer(state: any, action: any) {
-  console.log(state)
   return _characterReducer(state, action);
 }
