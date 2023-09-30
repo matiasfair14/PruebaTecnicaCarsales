@@ -13,12 +13,16 @@ export class EpisodeComponent implements OnInit {
   episodes: EpResult[] = [];
   loading: boolean = false;
   error: any = null;
+  cols: any[] = [];
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) {
+    this.loadColsHeader();
+  }
   ngOnInit():void {
     this.store.select('episodes').subscribe(({ EpisodesData, loading, error }) => {
       this.episodes = EpisodesData.results;
       console.log(this.episodes)
+      console.log(error)
       this.loading = loading;
       this.error = error;
     });
@@ -26,4 +30,14 @@ export class EpisodeComponent implements OnInit {
     this.store.dispatch(loadEpisodes());
 
   }
+
+  private loadColsHeader(): void {
+    this.cols = [
+      { header: 'Número Episodio', field: 'id' },
+      { header: 'Episodio', field: 'episode' },
+      { header: 'Nombre', field: 'name' },
+
+    ];
+  }
+
 }

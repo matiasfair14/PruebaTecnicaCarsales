@@ -4,7 +4,6 @@ import { EpisodeResult } from '../../interfaces/episode.interface';
 
 
 export interface LocationsState {
-  id: string;
   LocationsData: EpisodeResult;
   loaded: boolean;
   loading: boolean;
@@ -12,7 +11,6 @@ export interface LocationsState {
 }
 
 export const LocationsInitialState: LocationsState = {
-  id: null!,
   LocationsData: {} as EpisodeResult,
   loaded: false,
   loading: false,
@@ -26,7 +24,7 @@ const _locationsReducer = createReducer(
     ...state,
     loading: false,
     loaded: true,
-    result: {...Locations},
+    LocationsData: {...Locations},
   })),
   on(loadLocationsError, (state, { payload }) => ({
     ...state,

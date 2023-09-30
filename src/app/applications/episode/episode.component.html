@@ -18,14 +18,10 @@
     [paginator]="true"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
     [globalFilterFields]="[
-      'transmisionId',
-      'documentType',
-      'documentThemeCode',
-      'idOficio',
-      'numerationDate',
-      'responseLimitDate',
-      'xmlStatus',
-      'entryDate'
+      'id',
+      'episode',
+      'name',
+
     ]"
   >
     <ng-template pTemplate="caption">
@@ -64,28 +60,16 @@
             {{ col.header }}
             <p-columnFilter
               *ngSwitchCase="
-                col.field === 'transmisionId' ||
-                col.field === 'documentType' ||
-                col.field === 'documentThemeCode' ||
-                col.field === 'idOficio' ||
-                col.field === 'xmlStatus'
+                col.field === 'id' ||
+                col.field === 'episode' ||
+                col.field === 'name'
               "
               type="text"
               [field]="col.field"
               display="menu"
               class="ml-1"
             ></p-columnFilter>
-            <p-columnFilter
-              *ngSwitchCase="
-                col.field === 'numerationDate' ||
-                col.field === 'responseLimitDate' ||
-                col.field === 'entryDate'
-              "
-              type="date"
-              [field]="col.field"
-              display="menu"
-              class="ml-1"
-            ></p-columnFilter>
+
           </div>
         </th>
       </tr>
@@ -93,18 +77,16 @@
     <ng-template pTemplate="body" let-doc>
       <tr>
         <td>
-          {{ doc.transmisionId }}
+          {{ doc.id }}
         </td>
         <td>
-          {{ doc.documentType | documentTypes }}
+          {{ doc.episode }}
         </td>
         <td>
-          {{ doc.documentThemeCode }}
+          {{ doc.name }}
         </td>
-        <td>
-          {{ doc.idOficio }}
-        </td>
-        <td>
+
+        <!-- <td>
           {{
             doc.numerationDate == null
               ? "No disponible."
@@ -160,7 +142,7 @@
             class="p-button-rounded p-button-success mr-2 mb-1"
             icon="pi pi-pencil"
           ></button>
-        </td>
+        </td>-->
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">

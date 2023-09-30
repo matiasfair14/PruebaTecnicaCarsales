@@ -4,7 +4,6 @@ import { loadCharacters, loadCharactersError, loadCharactersSuccess } from '../a
 
 
 export interface CharactersState {
-  id: string;
   characterData: CharacterResult;
   loaded: boolean;
   loading: boolean;
@@ -12,7 +11,6 @@ export interface CharactersState {
 }
 
 export const charactersInitialState: CharactersState = {
-  id: null!,
   characterData: {} as CharacterResult,
   loaded: false,
   loading: false,
@@ -26,7 +24,7 @@ const _charactersReducer = createReducer(
     ...state,
     loading: false,
     loaded: true,
-    result: {...characters},
+    characterData: {...characters},
   })),
   on(loadCharactersError, (state, { payload }) => ({
     ...state,
